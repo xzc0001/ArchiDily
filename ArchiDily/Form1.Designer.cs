@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "0",
             "1",
             "2"}, -1);
@@ -496,7 +496,7 @@
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem3});
+            listViewItem1});
             this.listView1.Location = new System.Drawing.Point(326, 16);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(293, 304);
@@ -642,9 +642,9 @@
             this.groupBox3.Controls.Add(this.label29);
             this.groupBox3.Controls.Add(this.textBox29);
             this.groupBox3.Controls.Add(this.label30);
-            this.groupBox3.Location = new System.Drawing.Point(9, 84);
+            this.groupBox3.Location = new System.Drawing.Point(172, 10);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(710, 413);
+            this.groupBox3.Size = new System.Drawing.Size(130, 18);
             this.groupBox3.TabIndex = 35;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "两栏页面内容选项";
@@ -719,9 +719,9 @@
             this.panel2.Controls.Add(this.label21);
             this.panel2.Controls.Add(this.label22);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(283, 16);
+            this.panel2.Location = new System.Drawing.Point(-297, 16);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(424, 394);
+            this.panel2.Size = new System.Drawing.Size(424, 0);
             this.panel2.TabIndex = 30;
             // 
             // label40
@@ -1308,9 +1308,9 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.tabControl1);
-            this.groupBox2.Location = new System.Drawing.Point(347, 11);
+            this.groupBox2.Location = new System.Drawing.Point(9, 81);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(128, 20);
+            this.groupBox2.Size = new System.Drawing.Size(718, 430);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "三栏页面内容选项";
@@ -1324,7 +1324,7 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 16);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(122, 1);
+            this.tabControl1.Size = new System.Drawing.Size(712, 411);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -1342,7 +1342,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(114, 0);
+            this.tabPage1.Size = new System.Drawing.Size(704, 385);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "基本设置";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -1376,7 +1376,6 @@
             this.textBoxVar6.Name = "textBoxVar6";
             this.textBoxVar6.Size = new System.Drawing.Size(120, 20);
             this.textBoxVar6.TabIndex = 8;
-            this.textBoxVar6.Text = "1";
             // 
             // radioButtonVar6Bind
             // 
@@ -1391,12 +1390,10 @@
             // radioButtonVar6Type
             // 
             this.radioButtonVar6Type.AutoSize = true;
-            this.radioButtonVar6Type.Checked = true;
             this.radioButtonVar6Type.Location = new System.Drawing.Point(14, 48);
             this.radioButtonVar6Type.Name = "radioButtonVar6Type";
             this.radioButtonVar6Type.Size = new System.Drawing.Size(73, 17);
             this.radioButtonVar6Type.TabIndex = 11;
-            this.radioButtonVar6Type.TabStop = true;
             this.radioButtonVar6Type.Text = "手动填写";
             this.radioButtonVar6Type.UseVisualStyleBackColor = true;
             // 
@@ -1452,7 +1449,6 @@
             this.textBoxVar3.Name = "textBoxVar3";
             this.textBoxVar3.Size = new System.Drawing.Size(120, 20);
             this.textBoxVar3.TabIndex = 8;
-            this.textBoxVar3.Text = "1";
             // 
             // radioButtonVar3Bind
             // 
@@ -1467,12 +1463,10 @@
             // radioButtonVar3Type
             // 
             this.radioButtonVar3Type.AutoSize = true;
-            this.radioButtonVar3Type.Checked = true;
             this.radioButtonVar3Type.Location = new System.Drawing.Point(14, 48);
             this.radioButtonVar3Type.Name = "radioButtonVar3Type";
             this.radioButtonVar3Type.Size = new System.Drawing.Size(73, 17);
             this.radioButtonVar3Type.TabIndex = 11;
-            this.radioButtonVar3Type.TabStop = true;
             this.radioButtonVar3Type.Text = "手动填写";
             this.radioButtonVar3Type.UseVisualStyleBackColor = true;
             // 
@@ -1528,7 +1522,6 @@
             this.textBoxVar5.Name = "textBoxVar5";
             this.textBoxVar5.Size = new System.Drawing.Size(120, 20);
             this.textBoxVar5.TabIndex = 8;
-            this.textBoxVar5.Text = "1";
             // 
             // radioButtonVar5Bind
             // 
@@ -1543,12 +1536,10 @@
             // radioButtonVar5Type
             // 
             this.radioButtonVar5Type.AutoSize = true;
-            this.radioButtonVar5Type.Checked = true;
             this.radioButtonVar5Type.Location = new System.Drawing.Point(14, 48);
             this.radioButtonVar5Type.Name = "radioButtonVar5Type";
             this.radioButtonVar5Type.Size = new System.Drawing.Size(73, 17);
             this.radioButtonVar5Type.TabIndex = 11;
-            this.radioButtonVar5Type.TabStop = true;
             this.radioButtonVar5Type.Text = "手动填写";
             this.radioButtonVar5Type.UseVisualStyleBackColor = true;
             // 
@@ -1604,7 +1595,6 @@
             this.textBoxVar4.Name = "textBoxVar4";
             this.textBoxVar4.Size = new System.Drawing.Size(120, 20);
             this.textBoxVar4.TabIndex = 8;
-            this.textBoxVar4.Text = "1";
             // 
             // radioButtonVar4Bind
             // 
@@ -1619,12 +1609,10 @@
             // radioButtonVar4Type
             // 
             this.radioButtonVar4Type.AutoSize = true;
-            this.radioButtonVar4Type.Checked = true;
             this.radioButtonVar4Type.Location = new System.Drawing.Point(14, 48);
             this.radioButtonVar4Type.Name = "radioButtonVar4Type";
             this.radioButtonVar4Type.Size = new System.Drawing.Size(73, 17);
             this.radioButtonVar4Type.TabIndex = 11;
-            this.radioButtonVar4Type.TabStop = true;
             this.radioButtonVar4Type.Text = "手动填写";
             this.radioButtonVar4Type.UseVisualStyleBackColor = true;
             // 
@@ -1680,7 +1668,6 @@
             this.textBoxVar2.Name = "textBoxVar2";
             this.textBoxVar2.Size = new System.Drawing.Size(120, 20);
             this.textBoxVar2.TabIndex = 8;
-            this.textBoxVar2.Text = "1";
             // 
             // radioButtonVar2Bind
             // 
@@ -1695,12 +1682,10 @@
             // radioButtonVar2Type
             // 
             this.radioButtonVar2Type.AutoSize = true;
-            this.radioButtonVar2Type.Checked = true;
             this.radioButtonVar2Type.Location = new System.Drawing.Point(14, 48);
             this.radioButtonVar2Type.Name = "radioButtonVar2Type";
             this.radioButtonVar2Type.Size = new System.Drawing.Size(73, 17);
             this.radioButtonVar2Type.TabIndex = 11;
-            this.radioButtonVar2Type.TabStop = true;
             this.radioButtonVar2Type.Text = "手动填写";
             this.radioButtonVar2Type.UseVisualStyleBackColor = true;
             // 
@@ -1756,7 +1741,6 @@
             this.textBoxVar1.Name = "textBoxVar1";
             this.textBoxVar1.Size = new System.Drawing.Size(120, 20);
             this.textBoxVar1.TabIndex = 8;
-            this.textBoxVar1.Text = "1";
             // 
             // radioButtonVar1Bind
             // 
@@ -1772,12 +1756,10 @@
             // radioButtonVar1Type
             // 
             this.radioButtonVar1Type.AutoSize = true;
-            this.radioButtonVar1Type.Checked = true;
             this.radioButtonVar1Type.Location = new System.Drawing.Point(14, 48);
             this.radioButtonVar1Type.Name = "radioButtonVar1Type";
             this.radioButtonVar1Type.Size = new System.Drawing.Size(73, 17);
             this.radioButtonVar1Type.TabIndex = 11;
-            this.radioButtonVar1Type.TabStop = true;
             this.radioButtonVar1Type.Text = "手动填写";
             this.radioButtonVar1Type.UseVisualStyleBackColor = true;
             // 
@@ -1877,12 +1859,10 @@
             // radioButton_filenum_code
             // 
             this.radioButton_filenum_code.AutoSize = true;
-            this.radioButton_filenum_code.Checked = true;
             this.radioButton_filenum_code.Location = new System.Drawing.Point(13, 48);
             this.radioButton_filenum_code.Name = "radioButton_filenum_code";
             this.radioButton_filenum_code.Size = new System.Drawing.Size(61, 17);
             this.radioButton_filenum_code.TabIndex = 10;
-            this.radioButton_filenum_code.TabStop = true;
             this.radioButton_filenum_code.Text = "流水号";
             this.radioButton_filenum_code.UseVisualStyleBackColor = true;
             this.radioButton_filenum_code.CheckedChanged += new System.EventHandler(this.radioButton_filenum_code_CheckedChanged);
@@ -1890,6 +1870,8 @@
             // checkBox_filenum_fixed
             // 
             this.checkBox_filenum_fixed.AutoSize = true;
+            this.checkBox_filenum_fixed.Checked = true;
+            this.checkBox_filenum_fixed.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox_filenum_fixed.Location = new System.Drawing.Point(212, 49);
             this.checkBox_filenum_fixed.Name = "checkBox_filenum_fixed";
             this.checkBox_filenum_fixed.Size = new System.Drawing.Size(74, 17);
@@ -1914,7 +1896,7 @@
             this.textBox_filenum.Name = "textBox_filenum";
             this.textBox_filenum.Size = new System.Drawing.Size(120, 20);
             this.textBox_filenum.TabIndex = 13;
-            this.textBox_filenum.Text = "1";
+            this.textBox_filenum.TextChanged += new System.EventHandler(this.textBox_filenum_TextChanged);
             // 
             // comboBox_filenum
             // 
@@ -1924,6 +1906,7 @@
             this.comboBox_filenum.Name = "comboBox_filenum";
             this.comboBox_filenum.Size = new System.Drawing.Size(120, 21);
             this.comboBox_filenum.TabIndex = 12;
+            this.comboBox_filenum.SelectedIndexChanged += new System.EventHandler(this.comboBox_filenum_SelectedIndexChanged);
             // 
             // groupBox6
             // 
@@ -1947,6 +1930,7 @@
             this.comboBox_forwarding.Name = "comboBox_forwarding";
             this.comboBox_forwarding.Size = new System.Drawing.Size(120, 21);
             this.comboBox_forwarding.TabIndex = 4;
+            this.comboBox_forwarding.SelectedIndexChanged += new System.EventHandler(this.comboBox_forwarding_SelectedIndexChanged);
             // 
             // textBox_Forwarding
             // 
@@ -1954,7 +1938,7 @@
             this.textBox_Forwarding.Name = "textBox_Forwarding";
             this.textBox_Forwarding.Size = new System.Drawing.Size(120, 20);
             this.textBox_Forwarding.TabIndex = 3;
-            this.textBox_Forwarding.Text = "1";
+            this.textBox_Forwarding.TextChanged += new System.EventHandler(this.textBox_Forwarding_TextChanged);
             // 
             // radioButton_forwarding_binding
             // 
@@ -1970,12 +1954,10 @@
             // radioButton_forwarding_typein
             // 
             this.radioButton_forwarding_typein.AutoSize = true;
-            this.radioButton_forwarding_typein.Checked = true;
             this.radioButton_forwarding_typein.Location = new System.Drawing.Point(14, 51);
             this.radioButton_forwarding_typein.Name = "radioButton_forwarding_typein";
             this.radioButton_forwarding_typein.Size = new System.Drawing.Size(73, 17);
             this.radioButton_forwarding_typein.TabIndex = 6;
-            this.radioButton_forwarding_typein.TabStop = true;
             this.radioButton_forwarding_typein.Text = "手动填写";
             this.radioButton_forwarding_typein.UseVisualStyleBackColor = true;
             this.radioButton_forwarding_typein.CheckedChanged += new System.EventHandler(this.radioButton_forwarding_typein_CheckedChanged);
@@ -2071,7 +2053,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(703, 374);
+            this.tabPage2.Size = new System.Drawing.Size(114, 0);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "高级设置";
             this.tabPage2.UseVisualStyleBackColor = true;

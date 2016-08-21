@@ -468,13 +468,15 @@ namespace ArchiDily
             pdf.date = DateTime.Now.Year.ToString() + "年" + DateTime.Now.Month.ToString() + "月" + DateTime.Now.Day.ToString() + "日";
             //details
             //detailWidth
-            pdf.setTableWidth = new float[] 
-            {float.Parse(this.numericUpDownVar1.Value.ToString()),
-            float.Parse(this.numericUpDownVar2.Value.ToString()),
-            float.Parse(this.numericUpDownVar3.Value.ToString()),
-            float.Parse(this.numericUpDownVar4.Value.ToString()),
-            float.Parse(this.numericUpDownVar5.Value.ToString()),
-            float.Parse(this.numericUpDownVar6.Value.ToString())};
+                        List<float> widthTemp = new List<float>();
+            if (checkBoxVar1.Checked) { widthTemp.Add(float.Parse(numericUpDownVar1.Value.ToString())); }
+            if (checkBoxVar2.Checked) { widthTemp.Add(float.Parse(numericUpDownVar2.Value.ToString())); }
+            if (checkBoxVar3.Checked) { widthTemp.Add(float.Parse(numericUpDownVar3.Value.ToString())); }
+            if (checkBoxVar4.Checked) { widthTemp.Add(float.Parse(numericUpDownVar4.Value.ToString())); }
+            if (checkBoxVar5.Checked) { widthTemp.Add(float.Parse(numericUpDownVar5.Value.ToString())); }
+            if (checkBoxVar6.Checked) { widthTemp.Add(float.Parse(numericUpDownVar6.Value.ToString())); }
+            pdf.setTableWidth = widthTemp.ToArray();
+            
             //string[,] s = new string[,] { };
             pdf.details = new List<List<string>>();
             List<string> tmpDetail = new List<string>();
@@ -616,7 +618,14 @@ namespace ArchiDily
         {
             if (radioButton_filenum_code.Checked)
             {
-                pdf.SetFileNum(new string[] { "2", this.numericUpDown_filenum_fixed.Value.ToString() });
+                if (checkBox_filenum_fixed.Checked)
+                {
+                    pdf.SetFileNum(new string[] { "2", this.numericUpDown_filenum_fixed.Value.ToString() });
+                }
+                else
+                {
+                    pdf.SetFileNum(new string[] { "2", "1" });
+                }
             }
         }
 
@@ -631,6 +640,26 @@ namespace ArchiDily
         private void radioButtonVar1Bind_CheckedChanged(object sender, EventArgs e)
         {
             //
+        }
+
+        private void comboBox_forwarding_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            radioButton_forwarding_binding.Checked = true;
+        }
+
+        private void textBox_Forwarding_TextChanged(object sender, EventArgs e)
+        {
+            radioButton_forwarding_typein.Checked = true;
+        }
+
+        private void comboBox_filenum_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            radioButton_filenum_auto.Checked = true;
+        }
+
+        private void textBox_filenum_TextChanged(object sender, EventArgs e)
+        {
+            radioButton_filenum_code.Checked = true;
         }
     }
 }

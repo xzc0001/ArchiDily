@@ -299,8 +299,333 @@ namespace ArchiDily
 
             switch (Blocks)
             {
-                case 2: break;//二栏
-                case 3://三栏                    
+                case 2://二栏
+                    #region 两栏
+                    PageCount_temp = details.Count - 1;
+                    for (int paging = 0; paging < PageCount_temp; paging++)
+                    {//页面内容
+                        //标题
+                        font = new Font(basefont, 24);
+                        chunk = new Chunk(Title, font);
+                        paragraph = new Paragraph(chunk);
+                        paragraph.Alignment = Element.ALIGN_CENTER;
+                        table = new PdfPTable(1);
+                        cell = new PdfPCell(paragraph);
+                        cell.BorderWidth = 0;
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.PaddingTop = TitlePaddingTop;
+                        cell.PaddingTop = 10f;
+                        table.AddCell(cell);
+                        pdf.Add(table);
+
+                        //第一个表
+                        table = new PdfPTable(6);
+                        table.TotalWidth = pdf.PageSize.Width - 120f;
+                        table.LockedWidth = true;
+                        //接收单位
+                        switch (ForwardingType)
+                        {
+                            case 1://自动匹配
+                                Forwarding = "自动匹配：";
+                                break;
+                            case 2://输入
+                                //Forwarding = "";
+                                break;
+                            case 3://隐藏
+                                //Forwarding = "";
+                                break;
+                            default:
+                                System.Windows.Forms.MessageBox.Show("ForwardingType Error");
+
+                                return false;
+                        }
+                        chunk = new Chunk(Forwarding, font_normal);
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.Colspan = 3;
+                        cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                        cell.BorderWidthBottom = cell.BorderWidthRight = 0;
+                        cell.PaddingLeft = 15f;
+                        cell.PaddingTop = 12f;
+                        table.AddCell(cell);
+                        //档案号
+                        switch (FileNumType)
+                        {
+                            case 1://自动匹配
+                                FileNum_Edited = FileType + "档字：" + FileNum + "号";
+                                break;
+                            case 2://流水号
+                                string FileNumTemp = FileNum;
+                                FileNumTemp = (Convert.ToInt32(FileNum) + paging).ToString("D" + FileNumLength);
+                                FileNum_Edited = FileType + "档字：" + FileNumTemp + "号";
+                                break;
+                            case 3://隐藏
+                                FileNum_Edited = "";
+                                break;
+                            default:
+                                System.Windows.Forms.MessageBox.Show("FileNumType Error");
+
+                                return false;
+                        }
+                        chunk = new Chunk(FileNum_Edited, font_normal);
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.Colspan = 3;
+                        cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                        cell.BorderWidthLeft = cell.BorderWidthBottom = 0;
+                        cell.PaddingRight = 15f;
+                        cell.PaddingTop = 12f;
+                        table.AddCell(cell);
+                        //主要
+                        paragraph = new Paragraph();
+                        //paragraph.Add("        ");
+                        chunk = new Chunk(MainText1, font_normal);
+                        paragraph.Add(chunk);
+                        Name = Details[paging + 1][0];//按照数据匹配，默认Detail[paging+1,0]
+                        chunk = new Chunk(Name, font_bold);
+                        paragraph.Add(chunk);
+                        chunk = new Chunk(MainText2, font_normal);
+                        paragraph.Add(chunk);
+                        chunk = new Chunk(PeopleCount, font_bold);
+                        paragraph.Add(chunk);
+                        chunk = new Chunk(MainText3, font_normal);
+                        paragraph.Add(chunk);
+                        chunk = new Chunk(FileCount1, font_bold);
+                        paragraph.Add(chunk);
+                        chunk = new Chunk(MainText4, font_normal);
+                        paragraph.Add(chunk);
+                        chunk = new Chunk(FileCount2, font_bold);
+                        paragraph.Add(chunk);
+                        chunk = new Chunk(MainText5, font_normal);
+                        paragraph.Add(chunk);
+                        cell = new PdfPCell(paragraph);
+                        cell.Colspan = 6;
+                        cell.BorderWidthTop = cell.BorderWidthBottom = 0;
+                        cell.PaddingTop = 25f;
+                        cell.PaddingLeft = cell.PaddingRight = 15f;
+                        cell.PaddingBottom = 10f;
+                        table.AddCell(cell);
+                        //落款
+                        chunk = new Chunk(Sending, font_normal);
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                        cell.PaddingRight = 30f;
+                        cell.Colspan = 6;
+                        cell.BorderWidthTop = cell.BorderWidthBottom = 0;
+                        table.AddCell(cell);
+                        //日期
+                        chunk = new Chunk(Date, font_normal);
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                        cell.PaddingRight = 30f;
+                        cell.Colspan = 6;
+                        cell.BorderWidthTop = cell.BorderWidthBottom = 0;
+                        cell.PaddingBottom = 15f;
+                        table.AddCell(cell);
+                        //下方详情
+                        font = new Font(basefont, 13);
+                        PdfPTable tempTable = new PdfPTable(Details[0].Count);
+                        for (int count1 = 0; count1 < Details[0].Count; count1++)
+                        {
+                            //for (int count2 = 0; count2 < Details[0].Count; count2++)
+                            //{
+
+                            font.SetStyle("bold");
+
+                            chunk = new Chunk(Details[0][count1], font);
+                            cell = new PdfPCell(new Phrase(chunk));
+                            cell.Padding = 2f;
+                            cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                            cell.BorderWidthRight = cell.BorderWidthBottom = 0;
+                            tempTable.AddCell(cell);
+                            //}
+                        }
+                        for (int count1 = 0; count1 < Details[0].Count; count1++)
+                        {
+                            //for (int count2 = 0; count2 < Details[0].Count; count2++)
+                            //{
+
+                            font = new Font(basefont, 12);
+                            font.SetStyle("normal");
+
+                            chunk = new Chunk(Details[paging + 1][count1], font);
+                            cell = new PdfPCell(new Phrase(chunk));
+                            cell.Padding = 2f;
+                            cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                            cell.BorderWidthRight = cell.BorderWidthBottom = 0;
+                            tempTable.AddCell(cell);
+                            //}
+                        }
+                        cell = new PdfPCell(tempTable);
+                        cell.Padding = 0f;
+                        cell.Colspan = 6;
+                        cell.BorderWidthTop = cell.BorderWidthLeft = 0;
+                        tempTable.SetWidths(DetailTableWidth);
+                        table.AddCell(cell);
+                        table.SpacingAfter = table.SpacingBefore = 20f;
+                        pdf.Add(table);
+
+                        //分割线
+                        HorizontalLine = Image.GetInstance(@"./line.bmp");
+                        HorizontalLine.SetAbsolutePosition(0, pdf.PageSize.Height - table.TotalHeight - pdf.TopMargin - 76f);
+                        pdf.Add(HorizontalLine);
+
+                        //第二个表
+                        //pdf.Add(table);
+
+                        //分割线
+                       // HorizontalLine = Image.GetInstance(@"./solidline.bmp");
+                       // HorizontalLine.SetAbsolutePosition(0, pdf.PageSize.Height - table.TotalHeight * 2 - pdf.TopMargin - 116f);
+                       // pdf.Add(HorizontalLine);
+
+                        //第三个表
+                        table = new PdfPTable(2);
+                        table.TotalWidth = pdf.PageSize.Width - 120f;
+                        table.LockedWidth = true;
+                        table.SetWidths(new float[] { 1f, 11f });
+                        //左
+                        font = new Font(basefont, 20);
+                        font.SetStyle("bold");
+                        chunk = new Chunk(Receipt, font);
+                        paragraph = new Paragraph();
+                        paragraph.Add(chunk);
+                        paragraph.Alignment = Element.ALIGN_CENTER;
+                        cell = new PdfPCell(paragraph);
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        table.AddCell(cell);
+                        //右
+                        tempTable = new PdfPTable(4);
+                        //回执接收单位
+                        chunk = new Chunk(ReceiptForward, font_normal);
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.Colspan = 2;
+                        cell.BorderWidth = 0;
+                        cell.PaddingTop = 12f;
+                        cell.PaddingLeft = 10f;
+                        tempTable.AddCell(cell);
+                        //回执档案号
+                        chunk = new Chunk(FileNum_Edited, font_normal);
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.Colspan = 2;
+                        cell.BorderWidth = 0;
+                        cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                        cell.PaddingTop = 12f;
+                        cell.PaddingRight = 10f;
+                        tempTable.AddCell(cell);
+                        //主要
+                        paragraph = new Paragraph();
+                        //paragraph.Add("        ");
+                        chunk = new Chunk(ReceiptText1, font_normal);
+                        paragraph.Add(chunk);
+                        if (FileNumType != 3)
+                        {
+                            chunk = new Chunk(" ", font_normal);
+                            paragraph.Add(chunk);
+                            chunk = new Chunk(FileNum_Edited, font_bold);
+                            paragraph.Add(chunk);
+                            chunk = new Chunk(" ", font_normal);
+                            paragraph.Add(chunk);
+                        }
+                        chunk = new Chunk(ReceiptText2, font_normal);
+                        paragraph.Add(chunk);
+                        chunk = new Chunk(Name, font_bold);
+                        paragraph.Add(chunk);
+                        chunk = new Chunk(ReceiptText3, font_normal);
+                        paragraph.Add(chunk);
+                        chunk = new Chunk(FileCount1, font_bold);
+                        paragraph.Add(chunk);
+                        chunk = new Chunk(MainText4, font_normal);
+                        paragraph.Add(chunk);
+                        chunk = new Chunk(FileCount2, font_bold);
+                        paragraph.Add(chunk);
+                        chunk = new Chunk(ReceiptText4, font_normal);
+                        paragraph.Add(chunk);
+                        cell = new PdfPCell(paragraph);
+                        cell.Colspan = 4;
+                        cell.BorderWidth = 0;
+                        cell.Padding = 15f;
+                        tempTable.AddCell(cell);
+                        //此复
+                        chunk = new Chunk(ReceiptText5, font_normal);
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.Colspan = 3;
+                        cell.BorderWidth = 0;
+                        cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                        tempTable.AddCell(cell);
+                        chunk = new Chunk(" ");
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.BorderWidth = 0;
+                        cell.PaddingTop = 15f;
+                        tempTable.AddCell(cell);
+                        //盖章
+                        chunk = new Chunk(ReceiptTap, font_normal);
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.Colspan = 2;
+                        cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        cell.BorderWidth = 0;
+                        cell.PaddingTop = 5f;
+                        tempTable.AddCell(cell);
+                        //签字
+                        chunk = new Chunk(ReceiptSign, font_normal);
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.Colspan = 2;
+                        cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                        cell.BorderWidth = 0;
+                        cell.PaddingTop = 5f;
+                        tempTable.AddCell(cell);
+                        //年月日
+                        chunk = new Chunk(ReceiptDate, font_normal);
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.Colspan = 3;
+                        cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                        cell.BorderWidth = 0;
+                        cell.PaddingBottom = 15f;
+                        tempTable.AddCell(cell);
+                        chunk = new Chunk(" ");
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.BorderWidth = 0;
+                        cell.PaddingTop = 15f;
+                        tempTable.AddCell(cell);
+                        //添加子表至宿主表
+                        cell = new PdfPCell(tempTable);
+                        cell.Padding = 0f;
+                        table.AddCell(cell);
+                        //尾部地址
+                        font = new Font(basefont, 12);
+                        chunk = new Chunk(Address, font);
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.Colspan = 2;
+                        cell.BorderWidth = 0;
+                        table.AddCell(cell);
+                        //邮编及时间
+                        chunk = new Chunk(Zipcode, font);
+                        cell = new PdfPCell(new Phrase(chunk));
+                        tempTable = new PdfPTable(2);
+                        cell.BorderWidth = 0;
+                        cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                        tempTable.AddCell(cell);
+                        chunk = new Chunk(Date, font);
+                        cell = new PdfPCell(new Phrase(chunk));
+                        cell.BorderWidth = 0;
+                        cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                        tempTable.AddCell(cell);
+                        cell = new PdfPCell(tempTable);
+                        cell.Colspan = 2;
+                        cell.BorderWidth = 0;
+                        table.AddCell(cell);
+                        table.SpacingBefore = 20f;
+                        pdf.Add(table);
+                        if (paging != PageCount_temp - 1)
+                        {
+                            pdf.NewPage();
+                        }
+                    }
+                    break;
+                #endregion
+                case 3://三栏     
+                    #region 三栏               
                     PageCount_temp = details.Count-1;
                     for (int paging = 0; paging < PageCount_temp; paging++)
                     {//页面内容
@@ -356,8 +681,8 @@ namespace ArchiDily
                                 break;
                             case 2://流水号
                                 string FileNumTemp = FileNum;
-                                FileNum = (Convert.ToInt32(FileNumTemp) + paging).ToString("D" + FileNumLength);
-                                FileNum_Edited = FileType + "档字：" + FileNum + "号";
+                                FileNumTemp = (Convert.ToInt32(FileNum) + paging).ToString("D" + FileNumLength);
+                                FileNum_Edited = FileType + "档字：" + FileNumTemp + "号";
                                 break;
                             case 3://隐藏
                                 FileNum_Edited = "";
@@ -624,6 +949,7 @@ namespace ArchiDily
                         }
                     }
                     break;
+                #endregion
                 default:
                     pdf.Close();
                     System.Windows.Forms.MessageBox.Show("Blocks Error");
