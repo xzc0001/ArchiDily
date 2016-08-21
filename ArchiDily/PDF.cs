@@ -26,7 +26,8 @@ namespace ArchiDily
         private string MainText5;//份，请查收并将回执退回为盼。
         private string Sending;//落款
         private string Date;//日期
-        private string[,] Details;//下方表格详情
+        private string[,] Details_0;//下方表格详情
+        private List<List<string>> Details;
         private string Receipt;//回执
         private string ReceiptForward;//回执接收单位
         private string ReceiptText1;//收到你校
@@ -43,6 +44,9 @@ namespace ArchiDily
         private int PageCount_temp = 1;//
         private int I_column;//
         private int Blocks;
+        private int ForwardingType;
+        private int FileNumType;
+        private int FileNumLength;
         private float TitlePaddingTop = 0f;
         private float[] DetailTableWidth;
         /// <summary>
@@ -72,7 +76,8 @@ namespace ArchiDily
             set
             {
                 FileNum = value;
-                FileNum_Edited = FileType + "档字：" + FileNum + "号";
+                //FileNum_Edited = FileType + "档字：" + FileNum + "号";
+                //FileNum_Edited=Select from Database or count;
             }
         }
 
@@ -148,13 +153,23 @@ namespace ArchiDily
             set { Date = value; }
         }
 
-        public string[,] details
+        public string[,] details_0
+        {
+            get { return Details_0; }
+            set
+            {
+                Details_0 = value;
+                this.I_column = value.GetLength(1);
+            }
+        }
+
+        public List<List<string>> details
         {
             get { return Details; }
             set
             {
                 Details = value;
-                this.I_column = value.GetLength(1);
+                this.I_column = value.Count;
             }
         }
 
@@ -244,6 +259,17 @@ namespace ArchiDily
             get { return Blocks; }
             set { Blocks = value; }
         }
+
+        /// <summary>
+        /// 1=auto
+        /// 2=manual
+        /// 3=hide
+        /// </summary>
+        public int forwardingType
+        {
+            get { return ForwardingType; }
+            set { ForwardingType = value; }
+        }
         #endregion
         public bool CreatePDF()
         {
@@ -259,22 +285,24 @@ namespace ArchiDily
             else
             {
                 basefont = null;
+                System.Windows.Forms.MessageBox.Show("Font Error");
                 return false;
             }
             Font font_normal, font_bold, font;
             font_normal = new Font(basefont, 14);
-            font_bold = new Font(basefont, 15);
+            font_bold = new Font(basefont, 16);
             font_bold.SetStyle("bold");
             Image HorizontalLine;
 
-
+            PdfWriter.GetInstance(pdf, new FileStream(FilePath, FileMode.Create));
             pdf.Open();//开始写入页面
 
             switch (Blocks)
             {
                 case 2: break;//二栏
                 case 3://三栏                    
-                    for (int paging = 1; paging <= PageCount_temp; paging++)
+                    PageCount_temp = details.Count-1;
+                    for (int paging = 0; paging < PageCount_temp; paging++)
                     {//页面内容
 
                         //标题
@@ -287,6 +315,7 @@ namespace ArchiDily
                         cell.BorderWidth = 0;
                         cell.HorizontalAlignment = Element.ALIGN_CENTER;
                         cell.PaddingTop = TitlePaddingTop;
+                        cell.PaddingTop = 10f;
                         table.AddCell(cell);
                         pdf.Add(table);
 
@@ -295,6 +324,22 @@ namespace ArchiDily
                         table.TotalWidth = pdf.PageSize.Width - 120f;
                         table.LockedWidth = true;
                         //接收单位
+                        switch (ForwardingType)
+                        {
+                            case 1://自动匹配
+                                Forwarding = "自动匹配：";
+                                break;
+                            case 2://输入
+                                //Forwarding = "";
+                                break;
+                            case 3://隐藏
+                                //Forwarding = "";
+                                break;
+                            default:
+                                System.Windows.Forms.MessageBox.Show("ForwardingType Error");
+
+                                return false;
+                        }
                         chunk = new Chunk(Forwarding, font_normal);
                         cell = new PdfPCell(new Phrase(chunk));
                         cell.Colspan = 3;
@@ -304,6 +349,24 @@ namespace ArchiDily
                         cell.PaddingTop = 12f;
                         table.AddCell(cell);
                         //档案号
+                        switch (FileNumType)
+                        {
+                            case 1://自动匹配
+                                FileNum_Edited = FileType + "档字：" + FileNum + "号";
+                                break;
+                            case 2://流水号
+                                string FileNumTemp = FileNum;
+                                FileNum = (Convert.ToInt32(FileNumTemp) + paging).ToString("D" + FileNumLength);
+                                FileNum_Edited = FileType + "档字：" + FileNum + "号";
+                                break;
+                            case 3://隐藏
+                                FileNum_Edited = "";
+                                break;
+                            default:
+                                System.Windows.Forms.MessageBox.Show("FileNumType Error");
+
+                                return false;
+                        }
                         chunk = new Chunk(FileNum_Edited, font_normal);
                         cell = new PdfPCell(new Phrase(chunk));
                         cell.Colspan = 3;
@@ -314,8 +377,10 @@ namespace ArchiDily
                         table.AddCell(cell);
                         //主要
                         paragraph = new Paragraph();
+                        //paragraph.Add("        ");
                         chunk = new Chunk(MainText1, font_normal);
                         paragraph.Add(chunk);
+                        Name = Details[paging+1][0];//按照数据匹配，默认Detail[paging+1,0]
                         chunk = new Chunk(Name, font_bold);
                         paragraph.Add(chunk);
                         chunk = new Chunk(MainText2, font_normal);
@@ -358,28 +423,39 @@ namespace ArchiDily
                         table.AddCell(cell);
                         //下方详情
                         font = new Font(basefont, 13);
-                        PdfPTable tempTable = new PdfPTable(Details.GetLength(1));
-                        for (int count1 = 0; count1 < Details.GetLength(0); count1++)
+                        PdfPTable tempTable = new PdfPTable(Details[0].Count);
+                        for (int count1 = 0; count1 < Details[0].Count; count1++)
                         {
-                            for (int count2 = 0; count2 < Details.GetLength(1); count2++)
-                            {
-                                if (count1 == 0)
-                                {
+                            //for (int count2 = 0; count2 < Details[0].Count; count2++)
+                            //{
+                                
                                     font.SetStyle("bold");
-                                }
-                                else
-                                {
-                                    font = new Font(basefont, 12);
-                                    font.SetStyle("normal");
-                                }
-                                chunk = new Chunk(Details[count1, count2], font);
+                                
+                                chunk = new Chunk(Details[0][count1], font);
                                 cell = new PdfPCell(new Phrase(chunk));
                                 cell.Padding = 2f;
                                 cell.HorizontalAlignment = Element.ALIGN_CENTER;
-                                cell.HorizontalAlignment = Element.ALIGN_MIDDLE;
+                                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                                 cell.BorderWidthRight = cell.BorderWidthBottom = 0;
                                 tempTable.AddCell(cell);
-                            }
+                            //}
+                        }
+                        for (int count1 = 0; count1 < Details[0].Count; count1++)
+                        {
+                            //for (int count2 = 0; count2 < Details[0].Count; count2++)
+                            //{
+                            
+                                font = new Font(basefont, 12);
+                                font.SetStyle("normal");
+                            
+                            chunk = new Chunk(Details[paging+1][count1], font);
+                            cell = new PdfPCell(new Phrase(chunk));
+                            cell.Padding = 2f;
+                            cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                            cell.BorderWidthRight = cell.BorderWidthBottom = 0;
+                            tempTable.AddCell(cell);
+                            //}
                         }
                         cell = new PdfPCell(tempTable);
                         cell.Padding = 0f;
@@ -440,10 +516,18 @@ namespace ArchiDily
                         tempTable.AddCell(cell);
                         //主要
                         paragraph = new Paragraph();
+                        //paragraph.Add("        ");
                         chunk = new Chunk(ReceiptText1, font_normal);
                         paragraph.Add(chunk);
-                        chunk = new Chunk(FileNum_Edited, font_bold);
-                        paragraph.Add(chunk);
+                        if (FileNumType != 3)
+                        {
+                            chunk = new Chunk(" ", font_normal);
+                            paragraph.Add(chunk);
+                            chunk = new Chunk(FileNum_Edited, font_bold);
+                            paragraph.Add(chunk);
+                            chunk = new Chunk(" ", font_normal);
+                            paragraph.Add(chunk);
+                        }
                         chunk = new Chunk(ReceiptText2, font_normal);
                         paragraph.Add(chunk);
                         chunk = new Chunk(Name, font_bold);
@@ -532,18 +616,52 @@ namespace ArchiDily
                         cell.Colspan = 2;
                         cell.BorderWidth = 0;
                         table.AddCell(cell);
+                        table.SpacingBefore = 20f;
                         pdf.Add(table);
-
+                        if (paging!=PageCount_temp-1)
+                        {
+                            pdf.NewPage();
+                        }
                     }
                     break;
                 default:
                     pdf.Close();
+                    System.Windows.Forms.MessageBox.Show("Blocks Error");
+
                     return false;
+                    
             }
 
             pdf.Close();
 
             return true;
         }
+
+        /// <summary>
+        /// 设置档案号格式:{"{1}","{2}"}
+        /// </summary>
+        /// <param name="Setting">{1}=1,2,3;{2}=format</param>
+        /// <returns></returns>
+        public bool SetFileNum(string[] Setting)
+        {
+            switch (Setting[0])
+            {
+                case "1":
+                    FileNumType = 1;
+                    break;
+                case "2":
+                    FileNumType = 2;
+                    FileNumLength = Convert.ToInt32(Setting[1]);
+                    break;
+                case "3":
+                    FileNumType = 3;
+                    break;
+                default:
+                    break;
+            }
+            return true;
+        }
+
+       
     }
 }
